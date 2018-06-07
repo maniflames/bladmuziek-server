@@ -14,11 +14,10 @@ yoeri@bladmuziek.xyz
 $(document).ready(playMusic);
 
 function playMusic() {
-
     $(".note").click(showNote);
     $(document).keydown(changeNote);
     $(document).keyup(sameNote);
-    playNote();
+    window.addEventListener('keydown', keyDownHandler);
 }
 
 //when clicked change color
@@ -85,79 +84,25 @@ function sameNote() {
     else if (e == 76) { $(".note:nth-child(22)").toggleClass("selected");} 
 }
 
-//TODO: Refactor to choose note
-//TODO: Refactor to switch statement 
-//TODO: Add seperate function for playing the actual notes
-//TODO: Use audio API or library so if the same note is pressed twice it can stop the old note and start the new one or play two in parallell
+function keyDownHandler(e) {
+    const sounds = ['a.mp3', 'b-sharp-h.mp3', 'b-sharp-l.mp3', 'c-maj-7.mp3', 'c.mp3', 'g.mp3', 'e-sharp.mp3', 'f-sharp-+.mp3', 'f-sharp.mp3', 'f.mp3', 'g.mp3'];
+    const primaryKeys = [38, 40, 37, 39, 32, 87, 65, 83, 68, 70, 71];
+    const secondaryKeys = [90, 88, 67, 86, 66, 78, 77, 72, 74, 75, 76];
 
-function playNote(){
-$(document).keydown(function(e){
-    if (e.keyCode == 38) { 
-        document.getElementById('up').play();
-        return false;
-    } else if (e.keyCode == 40) { 
-        document.getElementById('down').play();
-        return false;
-    } else if (e.keyCode == 37) { 
-        document.getElementById('left').play();
-        return false;
-    } else if (e.keyCode == 39) { 
-        document.getElementById('right').play();
-        return false;
-    } else if (e.keyCode == 32) { 
-        document.getElementById('space').play();
-        return false;
-    } else if (e.keyCode == 87) { 
-        document.getElementById('w').play();
-        return false;
-    } else if (e.keyCode == 65) { 
-        document.getElementById('a').play();
-        return false;
-    } else if (e.keyCode == 83) { 
-        document.getElementById('s').play();
-        return false;
-    } else if (e.keyCode == 68) { 
-        document.getElementById('d').play();
-        return false;
-    } else if (e.keyCode == 70) { 
-        document.getElementById('f').play();
-        return false;
-    } else if (e.keyCode == 71) { 
-        document.getElementById('g').play();
-        return false;
-    } else if (e.keyCode == 90) { 
-        document.getElementById('z').play();
-        return false;
-    } else if (e.keyCode == 88) { 
-        document.getElementById('x').play();
-        return false;
-    } else if (e.keyCode == 67) { 
-        document.getElementById('c').play();
-        return false;
-    } else if (e.keyCode == 86) { 
-        document.getElementById('v').play();
-        return false;
-    }  else if (e.keyCode == 66) { 
-        document.getElementById('b').play();
-        return false;
-    } else if (e.keyCode == 78) { 
-        document.getElementById('n').play();
-        return false;
-    } else if (e.keyCode == 77) { 
-        document.getElementById('m').play();
-        return false;
-    } else if (e.keyCode == 72) { 
-        document.getElementById('h').play();
-        return false;
-    }  else if (e.keyCode == 74) { 
-        document.getElementById('j').play();
-        return false;
-    } else if (e.keyCode == 75) { 
-        document.getElementById('k').play();
-        return false;
-    } else if (e.keyCode == 76) { 
-        document.getElementById('l').play();
-        return false;
-    }
-});
+    if(primaryKeys.indexOf(e.keyCode) != -1) { 
+        let index = primaryKeys.indexOf(e.keyCode);
+        playTone(sounds[index]);
+    } else if(secondaryKeys.indexOf(e.keyCode) != -1) {
+        console.log('yaaaayyy')
+        let index = secondaryKeys.indexOf(e.keyCode); 
+        playTone(sounds[index]); 
+    } 
+}
+
+function playTone(sound) {
+    let tone = new Howl({
+        src: ['/sounds/' + sound]
+    });
+      
+    tone.play();
 }

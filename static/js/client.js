@@ -17,11 +17,15 @@ function keyHandler(e) {
 
 socket.on('noteRequest', function(data) {
     var reqKey = data.payload.keyCode;
+    var keyEventInit = {  char:String.fromCharCode(reqKey), key:String.fromCharCode(reqKey), keyCode: reqKey };
     console.log(reqKey);
 
     //Got some help from Soren & ml4294 @ https://stackoverflow.com/questions/596481/is-it-possible-to-simulate-key-press-events-programmatically 
     //Browsers can use different methods to execute a keydown so char, key & keyCode have to be defined
     //Apperently the browser has some flux like approach of handling events so you have to dispatch it
-    var e = new KeyboardEvent( 'keydown', {  char:String.fromCharCode(reqKey), key:String.fromCharCode(reqKey), keyCode: reqKey } );  
-    document.dispatchEvent(e);
+    var eDown = new KeyboardEvent( 'keydown', keyEventInit );  
+    document.dispatchEvent(eDown);
+
+    var eUp = new KeyboardEvent( 'keyup', keyEventInit);
+    document.dispatchEvent(eUp); 
 }) 

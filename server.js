@@ -14,6 +14,7 @@ app.get('/', (req, res) => {
     res.send('static/index.html')
 })
 
+//maybe connect base 
 let base;
 let units = [];
 
