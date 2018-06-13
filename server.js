@@ -20,9 +20,13 @@ let units = [];
 
 io.on('connection', (socket) => {
     console.log('new connection') 
-    if(!base){
+    let cookie = socket.request.headers.cookie
+
+    if(cookie === 'blad_mode=base') {
+        console.log('base')
         base = socket.id
     } else {
+        console.log('unit')
         units.push(socket.id)
     }
 

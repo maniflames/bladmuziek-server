@@ -17,7 +17,7 @@ function playMusic() {
     $(".note").click(showNote);
     $(document).keydown(changeNote);
     $(document).keyup(sameNote);
-    window.addEventListener('keydown', keyDownHandler);
+    document.addEventListener('keydown', keyDownHandler);
 }
 
 //when clicked change color
@@ -85,6 +85,7 @@ function sameNote() {
 }
 
 function keyDownHandler(e) {
+    console.log('handling keydown')
     const sounds = ['a.mp3', 'b-sharp-h.mp3', 'b-sharp-l.mp3', 'c-maj-7.mp3', 'c.mp3', 'g.mp3', 'e-sharp.mp3', 'f-sharp-+.mp3', 'f-sharp.mp3', 'f.mp3', 'g.mp3'];
     const primaryKeys = [38, 40, 37, 39, 32, 87, 65, 83, 68, 70, 71];
     const secondaryKeys = [90, 88, 67, 86, 66, 78, 77, 72, 74, 75, 76];
@@ -93,7 +94,6 @@ function keyDownHandler(e) {
         let index = primaryKeys.indexOf(e.keyCode);
         playTone(sounds[index]);
     } else if(secondaryKeys.indexOf(e.keyCode) != -1) {
-        console.log('yaaaayyy')
         let index = secondaryKeys.indexOf(e.keyCode); 
         playTone(sounds[index]); 
     } 

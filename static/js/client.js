@@ -9,7 +9,7 @@ function init() {
 
 function keyHandler(e) {
     var key = e.keyCode; 
-    console.log(key + 'was pressed'); 
+    console.log(key + ' was pressed'); 
     if(availableKeys.indexOf(key) != -1){
         socket.emit('noteRequest', {'payload': {'keyCode': key}});
     }  
