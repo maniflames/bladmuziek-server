@@ -20,9 +20,9 @@ let units = [];
 
 io.on('connection', (socket) => {
     console.log('new connection') 
-    let cookie = socket.request.headers.cookie
-
-    if(cookie === 'blad_mode=base') {
+    let req = socket.request.headers.referer
+    
+    if(req.indexOf('bladmode=base') != -1) {
         console.log('base')
         base = socket.id
     } else {
