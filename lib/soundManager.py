@@ -12,5 +12,11 @@ class SoundManager:
     def playSound(self, collectionName, soundName):
         for sound in self.collections[collectionName]:
             if sound.name == soundName:
-                sound.waveObject.play()
+                playing = sound.waveObject.play()
+                playing.wait_done()
                 time.sleep(0.1)
+    
+    def playSoundOnIndex(self, collectionName, index):
+        sounds = self.collections[collectionName]
+        sound = sounds[index]
+        self.playSound(collectionName, sound.name)
