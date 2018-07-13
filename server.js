@@ -12,4 +12,4 @@ app.get('/', (req, res) => {
 })
 
 app.listen(8080, () => console.log('App running on port 8080'))
-spawn('python3', ["./main.py", 'system', 0]);
+setTimeout(() => { spawn('python3', ["./main.py", 'system', 0]) }, 3000)
