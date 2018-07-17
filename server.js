@@ -24,15 +24,15 @@ io.on('connection', (socket) => {
 
     socket.on('noteRequest', (data) => {
         let touch = data.payload
-        lightIndex = lightIndex++
+        lightIndex = lightIndex + 1
 
         if (lightIndex > 5) {
             lightIndex = 0
         }
 
         if(touch.time - history[history.length - 1].time > 510) {
-            console.log('touch')
-            const lights = spawn('python3', ['./lights.py', lightIndex])
+            console.log(lightIndex)
+            const lights = spawn('sudo', ['python3', './lights.py', lightIndex])
             lights.stdout.on('data', (out) => {
                 console.log('[lights] ' + out.toString('utf8'))
             })
