@@ -1,3 +1,4 @@
+const { spawn } = require('child_process');
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)
@@ -14,28 +15,24 @@ app.get('/', (req, res) => {
     res.send('static/index.html')
 })
 
-//maybe connect base 
-let base;
-let units = [];
+//I know this is not the best way but the max size is 4.29 billion elements so with a restart every 3 hours it should be alright
+let history = [{time: 0}]; 
 
 io.on('connection', (socket) => {
     console.log('new connection') 
-    let req = socket.request.headers.referer
-    
-    if(req.indexOf('bladmode=base') != -1) {
-        console.log('base')
-        base = socket.id
-    } else {
-        console.log('unit')
-        units.push(socket.id)
-    }
 
     socket.on('noteRequest', (data) => {
-        //socket emits only to base, if you send this from base nothing will happen
-        //a socket can't emit data to itself
-        console.log(data.payload)
-        socket.to(base).emit('noteRequest', data) 
-    })  
+        let touch = data.payload
 
-    //TODO: detect base disconnect & unset? 
+        if(touch.time - history[history.length - 1].time > 510) {
+            console.log('touch')
+            const lights = spawn('python3', ['./lights.py'])
+            lights.stdout.on('data', (out) => {
+                console.log('[lights] ' + out.toString('utf8'))
+            })
+        }
+
+        history.push(touch)
+        socket.emit('noteRequest', data) 
+    })  
 })

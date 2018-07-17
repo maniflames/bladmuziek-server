@@ -86,7 +86,7 @@ function sameNote() {
 
 function keyDownHandler(e) {
     console.log('handling keydown')
-    const sounds = ['a.mp3', 'b-sharp-h.mp3', 'b-sharp-l.mp3', 'c-maj-7.mp3', 'c.mp3', 'g.mp3', 'e-sharp.mp3', 'f-sharp-+.mp3', 'f-sharp.mp3', 'f.mp3', 'g.mp3'];
+    const sounds = ['A4.mp3', 'B4.mp3', 'C4.mp3', 'D4.mp3', 'E4.mp3', 'F4.mp3', 'G4.mp3', 'C5.mp3', 'G4.mp3', 'G4.mp3', 'G4.mp3'];
     const primaryKeys = [38, 40, 37, 39, 32, 87, 65, 83, 68, 70, 71];
     const secondaryKeys = [90, 88, 67, 86, 66, 78, 77, 72, 74, 75, 76];
 
