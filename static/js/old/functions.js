@@ -12,12 +12,31 @@ yoeri@bladmuziek.xyz
 */
 
 $(document).ready(playMusic);
+const collections = [
+    {
+        name: 'notes',
+        sounds: ['A4.mp3', 'B4.mp3', 'C4.mp3', 'D4.mp3', 'E4.mp3', 'F4.mp3', 'G4.mp3', 'C5.mp3', 'G4.mp3', 'G4.mp3', 'G4.mp3'],
+    }, {
+        name: 'phone',
+        sounds: ['notification.mp3', 'notification2.mp3', 'iphone.mp3', 'samsung.mp3'], 
+    },
+    {
+        name: 'drum',
+        sounds: ['clap.wav', 'kick.wav', 'hihat.wav', 'snare.wav'], 
+    },
+    {
+        name: 'iphone',
+        sounds: ['lol.mp3', 'lol.mp3', 'lol.mp3', 'lol.mp3', 'lol.mp3', 'lol.mp3', 'lol.mp3', 'lol.mp3', 'lol.mp3', 'lol.mp3', 'lol.mp3'], 
+    }
+]
+
+let selectedCollection = 0
 
 function playMusic() {
     $(".note").click(showNote);
     $(document).keydown(changeNote);
     $(document).keyup(sameNote);
-    document.addEventListener('keydown', keyDownHandler);
+    document.addEventListener('keydown', keyDownHandlerMakeyMakey);
 }
 
 //when clicked change color
@@ -85,18 +104,40 @@ function sameNote() {
 }
 
 function keyDownHandler(e) {
-    console.log('handling keydown')
-    const sounds = ['A4.mp3', 'B4.mp3', 'C4.mp3', 'D4.mp3', 'E4.mp3', 'F4.mp3', 'G4.mp3', 'C5.mp3', 'G4.mp3', 'G4.mp3', 'G4.mp3'];
-    const primaryKeys = [38, 40, 37, 39, 32, 87, 65, 83, 68, 70, 71];
+    //49 = number 1
+    const primaryKeys = [49, 40, 37, 39, 32, 87, 65, 83, 68, 70, 71];
     const secondaryKeys = [90, 88, 67, 86, 66, 78, 77, 72, 74, 75, 76];
 
     if(primaryKeys.indexOf(e.keyCode) != -1) { 
         let index = primaryKeys.indexOf(e.keyCode);
-        playTone(sounds[index]);
+        playTone(collections[selectedCollection].sounds[index]);
     } else if(secondaryKeys.indexOf(e.keyCode) != -1) {
         let index = secondaryKeys.indexOf(e.keyCode); 
-        playTone(sounds[index]); 
-    } 
+        playTone(collections[selectedCollection].sounds[index]); 
+    } else if(e.keyCode == 38) {
+        //switch on arrow up
+        switchSounds()
+    }
+}
+
+function keyDownHandlerMakeyMakey(e) {
+    const keys = ['w', 'a', 's', 'd', 'f', 'g']
+
+    let index = keys.indexOf(e.key)
+    if(index > -1){
+        playTone(collections[selectedCollection].sounds[index])
+    } else if (e.key == ' ') {
+        switchSounds()
+    }
+}
+
+function switchSounds() {
+    selectedCollection = selectedCollection + 1
+    if(selectedCollection >= collections.length) {
+        selectedCollection = 0
+    }
+
+    console.log(collections[selectedCollection].name)
 }
 
 function playTone(sound) {
